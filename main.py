@@ -548,18 +548,21 @@ def build_html(teams: list[dict], snapshots: dict) -> str:
           document.querySelectorAll('thead tr:last-child th')[col].classList.add(asc ? 'sort-asc' : 'sort-desc');
         }}
 
-        // Auto-select the snapshot closest to 7 days ago on load
+        // Auto-select the snapshot closest to 7 days ago on load, then sort by Total Pts
         (function() {{
           const dates = Object.keys(SNAPSHOTS).sort();
-          if (!dates.length) return;
-          const today = new Date('{TODAY}T00:00:00');
-          let best = dates[0], bestDiff = Infinity;
-          dates.forEach(d => {{
-            const diff = Math.abs(Math.round((today - new Date(d + 'T00:00:00')) / 86400000) - 7);
-            if (diff < bestDiff) {{ bestDiff = diff; best = d; }}
-          }});
-          document.getElementById('snapselect').value = best;
-          updateDeltas();
+          if (dates.length) {{
+            const today = new Date('{TODAY}T00:00:00');
+            let best = dates[0], bestDiff = Infinity;
+            dates.forEach(d => {{
+              const diff = Math.abs(Math.round((today - new Date(d + 'T00:00:00')) / 86400000) - 7);
+              if (diff < bestDiff) {{ bestDiff = diff; best = d; }}
+            }});
+            document.getElementById('snapselect').value = best;
+            updateDeltas(); // updateDeltas calls sort internally
+          }} else {{
+            sort(3, false); // no snapshots yet — still sort by Total Pts desc
+          }}
         }})();
       </script>
     </body>
@@ -592,6 +595,7 @@ def main():
     else:
         print("  No historical snapshots yet (comparison dropdown will be empty)")
 
+    teams.sort(key=lambda t: t.get("pts") or 0, reverse=True)
     OUTPUT_FILE.write_text(build_html(teams, snapshots), encoding="utf-8")
     print(f"  Report written: {OUTPUT_FILE}")
     print("Done. Open index.html in your browser.")
