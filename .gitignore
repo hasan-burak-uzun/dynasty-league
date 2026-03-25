@@ -1,0 +1,8 @@
+cookies.txt
+debug_api.json
+debug.html
+testchrome.py
+snapshots/
+__pycache__/
+.venv/
+*.pyc

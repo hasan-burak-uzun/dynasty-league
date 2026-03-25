@@ -1,0 +1,12 @@
+[project]
+name = "dynasty-league"
+version = "0.1.0"
+description = "Yahoo NBA Fantasy League standings tracker"
+requires-python = ">=3.8"
+dependencies = [
+    "beautifulsoup4",
+    "lxml",
+    "requests",
+    "pywin32",
+    "pycryptodome",
+]
