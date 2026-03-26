@@ -9,4 +9,6 @@ dependencies = [
     "requests",
     "pywin32",
     "pycryptodome",
+    "rapidfuzz",
+    "openpyxl",
 ]
