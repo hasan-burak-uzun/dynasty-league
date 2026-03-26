@@ -17,6 +17,9 @@ import unicodedata
 from pathlib import Path
 from datetime import date
 
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
 import requests
 from rapidfuzz import fuzz, process as rfprocess
 from openpyxl import load_workbook
@@ -383,9 +386,31 @@ def update_excel(
 
     if unmatched_names:
         unique = sorted(set(unmatched_names))
-        print(f"  {len(unique)} player(s) not found in salary list → assigned ${DEFAULT_SALARY}M:")
+        print(f"  {len(unique)} player(s) not found in salary list -> assigned ${DEFAULT_SALARY}M:")
         for n in unique:
             print(f"    - {n}")
+
+    # Sort team tabs by total salary (highest → lowest); keep salary sheet first
+    def _sheet_total(sheet_name: str) -> float:
+        s = wb[sheet_name]
+        total = 0.0
+        for row_num in range(3, 25):
+            val = str(s.cell(row_num, 1).value or "").strip().upper()
+            if val == "TOTAL":
+                break
+            sal = s.cell(row_num, 2).value
+            try:
+                total += float(sal or 0)
+            except (ValueError, TypeError):
+                pass
+        return total
+
+    team_sheet_names = [n for n in wb.sheetnames if n != SALARY_SHEET]
+    team_sheet_names.sort(key=_sheet_total, reverse=True)
+
+    # Rebuild sheet order: salary sheet first, then teams by total salary
+    ordered = [wb[SALARY_SHEET]] + [wb[n] for n in team_sheet_names]
+    wb._sheets = ordered
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     wb.save(str(output_path))
