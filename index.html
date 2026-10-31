@@ -292,7 +292,7 @@
       const cur = SNAPSHOTS[to] || {}, old = from ? SNAPSHOTS[from] : null;
 
       $('overall-header').textContent = 'As of ' + fmtDate(to);
-      $('period-header').textContent = from ? fmtDate(from) + ' → ' + fmtDate(to) + ' · ' + dayDiff(from, to) + ' days' : 'Comparison period';
+      $('period-header').textContent = from ? fmtDate(from) + ' → ' + fmtDate(to) : 'Comparison period';
 
       document.querySelectorAll('#tbl tbody tr').forEach(row => {
         const name = row.dataset.name, c = cur[name], o = old && old[name];
