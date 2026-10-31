@@ -90,24 +90,21 @@
 </head>
 <body>
   <h1>Dynasty League</h1>
-  <div class="subtitle">Wednesday, October 28 2026 · Live scoring ON (includes games in progress)</div>
+  <div class="subtitle">Friday, October 30 2026 · Live scoring ON (includes games in progress)</div>
 
   <div class="controls">
-    <label for="snapselect">Compare against:</label>
-    <select id="snapselect" onchange="updateDeltas()">
-    <option value="">— No comparison —</option>
-    <option value="2026-10-20">Start of season (Oct 20)</option>
-
-    </select>
-    <span id="period-label" style="font-size:.82rem;color:#64748b;"></span>
+    <label for="fromselect">Compare from</label>
+    <select id="fromselect" onchange="render()"></select>
+    <label for="toselect">to</label>
+    <select id="toselect" onchange="onToChange()"></select>
   </div>
 
   <table id="tbl">
     <thead>
       <tr class="group-header">
         <th class="blank" colspan="2"></th>
-        <th colspan="3">Overall</th>
-        <th class="sep" id="period-header" colspan="3">Comparison Period</th>
+        <th colspan="3" id="overall-header">Overall</th>
+        <th class="sep" id="period-header" colspan="3">Comparison period</th>
       </tr>
       <tr>
         <th class="left" style="width:2.2rem">#</th>
@@ -122,42 +119,12 @@
     </thead>
     <tbody>
 
-    <tr data-name="Konya Steppe Storm">
-      <td class="rank"></td>
-      <td class="team">Konya Steppe Storm</td>
-      <td>48</td>
-      <td>1,614.65</td>
-      <td>33.64</td>
-      <td class="sep delta-gp"><span class="na">—</span></td>
-      <td class="delta-pts"><span class="na">—</span></td>
-      <td class="delta-avg"><span class="na">—</span></td>
-    </tr>
     <tr data-name="Prime Numbers">
       <td class="rank"></td>
       <td class="team">Prime Numbers</td>
-      <td>38</td>
-      <td>1,458.90</td>
-      <td>38.39</td>
-      <td class="sep delta-gp"><span class="na">—</span></td>
-      <td class="delta-pts"><span class="na">—</span></td>
-      <td class="delta-avg"><span class="na">—</span></td>
-    </tr>
-    <tr data-name="Caddebostan Gents">
-      <td class="rank"></td>
-      <td class="team">Caddebostan Gents</td>
-      <td>42</td>
-      <td>1,274.70</td>
-      <td>30.35</td>
-      <td class="sep delta-gp"><span class="na">—</span></td>
-      <td class="delta-pts"><span class="na">—</span></td>
-      <td class="delta-avg"><span class="na">—</span></td>
-    </tr>
-    <tr data-name="NuYork Pimps">
-      <td class="rank"></td>
-      <td class="team">NuYork Pimps</td>
-      <td>38</td>
-      <td>1,264.15</td>
-      <td>33.27</td>
+      <td class="overall-gp">43</td>
+      <td class="overall-pts">1,608.05</td>
+      <td class="overall-avg">37.40</td>
       <td class="sep delta-gp"><span class="na">—</span></td>
       <td class="delta-pts"><span class="na">—</span></td>
       <td class="delta-avg"><span class="na">—</span></td>
@@ -165,9 +132,29 @@
     <tr data-name="Tustin Martens">
       <td class="rank"></td>
       <td class="team">Tustin Martens</td>
-      <td>33</td>
-      <td>1,224.05</td>
-      <td>37.09</td>
+      <td class="overall-gp">42</td>
+      <td class="overall-pts">1,518.35</td>
+      <td class="overall-avg">36.15</td>
+      <td class="sep delta-gp"><span class="na">—</span></td>
+      <td class="delta-pts"><span class="na">—</span></td>
+      <td class="delta-avg"><span class="na">—</span></td>
+    </tr>
+    <tr data-name="NuYork Pimps">
+      <td class="rank"></td>
+      <td class="team">NuYork Pimps</td>
+      <td class="overall-gp">45</td>
+      <td class="overall-pts">1,490.70</td>
+      <td class="overall-avg">33.13</td>
+      <td class="sep delta-gp"><span class="na">—</span></td>
+      <td class="delta-pts"><span class="na">—</span></td>
+      <td class="delta-avg"><span class="na">—</span></td>
+    </tr>
+    <tr data-name="Konya Steppe Storm">
+      <td class="rank"></td>
+      <td class="team">Konya Steppe Storm</td>
+      <td class="overall-gp">54</td>
+      <td class="overall-pts">1,785.60</td>
+      <td class="overall-avg">33.07</td>
       <td class="sep delta-gp"><span class="na">—</span></td>
       <td class="delta-pts"><span class="na">—</span></td>
       <td class="delta-avg"><span class="na">—</span></td>
@@ -175,29 +162,19 @@
     <tr data-name="Le Coq Krakens">
       <td class="rank"></td>
       <td class="team">Le Coq Krakens</td>
-      <td>39</td>
-      <td>1,218.25</td>
-      <td>31.24</td>
+      <td class="overall-gp">46</td>
+      <td class="overall-pts">1,461.20</td>
+      <td class="overall-avg">31.77</td>
       <td class="sep delta-gp"><span class="na">—</span></td>
       <td class="delta-pts"><span class="na">—</span></td>
       <td class="delta-avg"><span class="na">—</span></td>
     </tr>
-    <tr data-name="Anaheim CimBomBomers">
+    <tr data-name="Caddebostan Gents">
       <td class="rank"></td>
-      <td class="team">Anaheim CimBomBomers</td>
-      <td>39</td>
-      <td>1,101.55</td>
-      <td>28.24</td>
-      <td class="sep delta-gp"><span class="na">—</span></td>
-      <td class="delta-pts"><span class="na">—</span></td>
-      <td class="delta-avg"><span class="na">—</span></td>
-    </tr>
-    <tr data-name="Arizona UnPaid">
-      <td class="rank"></td>
-      <td class="team">Arizona UnPaid</td>
-      <td>36</td>
-      <td>1,075.00</td>
-      <td>29.86</td>
+      <td class="team">Caddebostan Gents</td>
+      <td class="overall-gp">50</td>
+      <td class="overall-pts">1,568.90</td>
+      <td class="overall-avg">31.38</td>
       <td class="sep delta-gp"><span class="na">—</span></td>
       <td class="delta-pts"><span class="na">—</span></td>
       <td class="delta-avg"><span class="na">—</span></td>
@@ -205,19 +182,19 @@
     <tr data-name="Thrace Canaries">
       <td class="rank"></td>
       <td class="team">Thrace Canaries</td>
-      <td>33</td>
-      <td>987.20</td>
-      <td>29.92</td>
+      <td class="overall-gp">40</td>
+      <td class="overall-pts">1,235.45</td>
+      <td class="overall-avg">30.89</td>
       <td class="sep delta-gp"><span class="na">—</span></td>
       <td class="delta-pts"><span class="na">—</span></td>
       <td class="delta-avg"><span class="na">—</span></td>
     </tr>
-    <tr data-name="Diamond Bar Ballers">
+    <tr data-name="Arizona UnPaid">
       <td class="rank"></td>
-      <td class="team">Diamond Bar Ballers</td>
-      <td>33</td>
-      <td>970.65</td>
-      <td>29.41</td>
+      <td class="team">Arizona UnPaid</td>
+      <td class="overall-gp">44</td>
+      <td class="overall-pts">1,319.65</td>
+      <td class="overall-avg">29.99</td>
       <td class="sep delta-gp"><span class="na">—</span></td>
       <td class="delta-pts"><span class="na">—</span></td>
       <td class="delta-avg"><span class="na">—</span></td>
@@ -225,9 +202,29 @@
     <tr data-name="Artvin 99rs">
       <td class="rank"></td>
       <td class="team">Artvin 99rs</td>
-      <td>33</td>
-      <td>969.30</td>
-      <td>29.37</td>
+      <td class="overall-gp">39</td>
+      <td class="overall-pts">1,155.00</td>
+      <td class="overall-avg">29.62</td>
+      <td class="sep delta-gp"><span class="na">—</span></td>
+      <td class="delta-pts"><span class="na">—</span></td>
+      <td class="delta-avg"><span class="na">—</span></td>
+    </tr>
+    <tr data-name="Diamond Bar Ballers">
+      <td class="rank"></td>
+      <td class="team">Diamond Bar Ballers</td>
+      <td class="overall-gp">39</td>
+      <td class="overall-pts">1,152.65</td>
+      <td class="overall-avg">29.56</td>
+      <td class="sep delta-gp"><span class="na">—</span></td>
+      <td class="delta-pts"><span class="na">—</span></td>
+      <td class="delta-avg"><span class="na">—</span></td>
+    </tr>
+    <tr data-name="Anaheim CimBomBomers">
+      <td class="rank"></td>
+      <td class="team">Anaheim CimBomBomers</td>
+      <td class="overall-gp">45</td>
+      <td class="overall-pts">1,260.30</td>
+      <td class="overall-avg">28.01</td>
       <td class="sep delta-gp"><span class="na">—</span></td>
       <td class="delta-pts"><span class="na">—</span></td>
       <td class="delta-avg"><span class="na">—</span></td>
@@ -235,9 +232,9 @@
     <tr data-name="Kadikoy Socialites">
       <td class="rank"></td>
       <td class="team">Kadikoy Socialites</td>
-      <td>33</td>
-      <td>957.35</td>
-      <td>29.01</td>
+      <td class="overall-gp">41</td>
+      <td class="overall-pts">1,145.90</td>
+      <td class="overall-avg">27.95</td>
       <td class="sep delta-gp"><span class="na">—</span></td>
       <td class="delta-pts"><span class="na">—</span></td>
       <td class="delta-avg"><span class="na">—</span></td>
@@ -250,51 +247,69 @@
   </div>
 
   <script>
-    const CURRENT   = {"Konya Steppe Storm": {"gp": 48, "pts": 1614.65}, "Prime Numbers": {"gp": 38, "pts": 1458.9}, "Caddebostan Gents": {"gp": 42, "pts": 1274.7}, "NuYork Pimps": {"gp": 38, "pts": 1264.15}, "Tustin Martens": {"gp": 33, "pts": 1224.05}, "Le Coq Krakens": {"gp": 39, "pts": 1218.25}, "Anaheim CimBomBomers": {"gp": 39, "pts": 1101.55}, "Arizona UnPaid": {"gp": 36, "pts": 1075.0}, "Thrace Canaries": {"gp": 33, "pts": 987.2}, "Diamond Bar Ballers": {"gp": 33, "pts": 970.65}, "Artvin 99rs": {"gp": 33, "pts": 969.3}, "Kadikoy Socialites": {"gp": 33, "pts": 957.35}};
-    const SNAPSHOTS = {"2026-10-20": {"_label": "Start of season", "Konya Steppe Storm": {"gp": 0, "pts": 0.0}, "Prime Numbers": {"gp": 0, "pts": 0.0}, "Tustin Martens": {"gp": 0, "pts": 0.0}, "Caddebostan Gents": {"gp": 0, "pts": 0.0}, "NuYork Pimps": {"gp": 0, "pts": 0.0}, "Le Coq Krakens": {"gp": 0, "pts": 0.0}, "Arizona UnPaid": {"gp": 0, "pts": 0.0}, "Anaheim CimBomBomers": {"gp": 0, "pts": 0.0}, "Artvin 99rs": {"gp": 0, "pts": 0.0}, "Kadikoy Socialites": {"gp": 0, "pts": 0.0}, "Thrace Canaries": {"gp": 0, "pts": 0.0}, "Diamond Bar Ballers": {"gp": 0, "pts": 0.0}}};
+    const SNAPSHOTS = {"2026-10-28": {"Konya Steppe Storm": {"gp": 48, "pts": 1614.65}, "Prime Numbers": {"gp": 38, "pts": 1458.9}, "Caddebostan Gents": {"gp": 42, "pts": 1274.7}, "NuYork Pimps": {"gp": 38, "pts": 1264.15}, "Tustin Martens": {"gp": 33, "pts": 1224.05}, "Le Coq Krakens": {"gp": 39, "pts": 1218.25}, "Anaheim CimBomBomers": {"gp": 39, "pts": 1101.55}, "Arizona UnPaid": {"gp": 36, "pts": 1075.0}, "Thrace Canaries": {"gp": 33, "pts": 987.2}, "Diamond Bar Ballers": {"gp": 33, "pts": 970.65}, "Artvin 99rs": {"gp": 33, "pts": 969.3}, "Kadikoy Socialites": {"gp": 33, "pts": 957.35}}, "2026-10-20": {"_label": "Start of season", "Konya Steppe Storm": {"gp": 0, "pts": 0.0}, "Prime Numbers": {"gp": 0, "pts": 0.0}, "Tustin Martens": {"gp": 0, "pts": 0.0}, "Caddebostan Gents": {"gp": 0, "pts": 0.0}, "NuYork Pimps": {"gp": 0, "pts": 0.0}, "Le Coq Krakens": {"gp": 0, "pts": 0.0}, "Arizona UnPaid": {"gp": 0, "pts": 0.0}, "Anaheim CimBomBomers": {"gp": 0, "pts": 0.0}, "Artvin 99rs": {"gp": 0, "pts": 0.0}, "Kadikoy Socialites": {"gp": 0, "pts": 0.0}, "Thrace Canaries": {"gp": 0, "pts": 0.0}, "Diamond Bar Ballers": {"gp": 0, "pts": 0.0}}, "2026-10-30": {"Prime Numbers": {"gp": 43, "pts": 1608.05}, "Tustin Martens": {"gp": 42, "pts": 1518.35}, "NuYork Pimps": {"gp": 45, "pts": 1490.7}, "Konya Steppe Storm": {"gp": 54, "pts": 1785.6}, "Le Coq Krakens": {"gp": 46, "pts": 1461.2}, "Caddebostan Gents": {"gp": 50, "pts": 1568.9}, "Thrace Canaries": {"gp": 40, "pts": 1235.45}, "Arizona UnPaid": {"gp": 44, "pts": 1319.65}, "Artvin 99rs": {"gp": 39, "pts": 1155.0}, "Diamond Bar Ballers": {"gp": 39, "pts": 1152.65}, "Anaheim CimBomBomers": {"gp": 45, "pts": 1260.3}, "Kadikoy Socialites": {"gp": 41, "pts": 1145.9}}};
+    const TODAY = '2026-10-30';
+    const $ = id => document.getElementById(id);
+    const dates = Object.keys(SNAPSHOTS).sort();
+    let lastCol = 4, lastAsc = false;
 
-    let lastCol = 3, lastAsc = false;
-
+    function dayDiff(a, b) { return Math.round((new Date(b + 'T00:00:00') - new Date(a + 'T00:00:00')) / 86400000); }
+    function fmtDate(d) { return new Date(d + 'T00:00:00').toLocaleDateString('en-US', {month: 'short', day: 'numeric'}); }
+    function labelFor(d) {
+      const n = dayDiff(d, TODAY);
+      const extra = SNAPSHOTS[d]._label || (n === 0 ? 'today' : n + ' day' + (n !== 1 ? 's' : '') + ' ago');
+      return fmtDate(d) + ' (' + extra + ')';
+    }
     function fmtNum(v, dec) {
-      if (v === null || v === undefined) return '<span class="na">—</span>';
+      if (v === null || v === undefined || isNaN(v)) return '<span class="na">—</span>';
       if (dec) return v.toLocaleString('en-US', {minimumFractionDigits: dec, maximumFractionDigits: dec});
       return Math.round(v).toLocaleString('en-US');
     }
 
-    function updateDeltas() {
-      const dateStr = document.getElementById('snapselect').value;
-      const snap    = dateStr ? SNAPSHOTS[dateStr] : null;
+    function fillTo() {
+      // The earliest snapshot has nothing before it, so it is only offered when it is the only one.
+      const opts = dates.length > 1 ? dates.slice(1) : dates;
+      $('toselect').innerHTML = opts.slice().reverse().map(d => '<option value="' + d + '">' + labelFor(d) + '</option>').join('');
+      $('toselect').value = opts[opts.length - 1];
+    }
 
-      // Update column group header
-      if (dateStr) {
-        const d     = new Date(dateStr + 'T00:00:00');
-        const today = new Date('2026-10-28T00:00:00');
-        const days  = Math.round((today - d) / 86400000);
-        const lbl = snap && snap._label;
-        document.getElementById('period-header').textContent = lbl ? 'Since ' + lbl.toLowerCase() : 'Last ' + days + ' Day' + (days !== 1 ? 's' : '');
-        document.getElementById('period-label').textContent  = (lbl ? lbl + ' · ' : 'vs snapshot from ') + d.toLocaleDateString('en-US', {month:'short', day:'numeric'});
-      } else {
-        document.getElementById('period-header').textContent = 'Comparison Period';
-        document.getElementById('period-label').textContent  = '';
-      }
+    function fillFrom() {
+      const to = $('toselect').value, keep = $('fromselect').value;
+      const opts = dates.filter(d => d < to).reverse();            // newest first
+      $('fromselect').innerHTML = '<option value="">— none —</option>' +
+        opts.map(d => '<option value="' + d + '">' + labelFor(d) + '</option>').join('');
+      if (keep && opts.includes(keep)) { $('fromselect').value = keep; return; }
+      // default: the snapshot closest to 7 days before the "to" date
+      let best = '', bestDiff = Infinity;
+      opts.forEach(d => { const diff = Math.abs(dayDiff(d, to) - 7); if (diff < bestDiff) { bestDiff = diff; best = d; } });
+      $('fromselect').value = best;
+    }
+
+    function onToChange() { fillFrom(); render(); }
+
+    function render() {
+      const to = $('toselect').value, from = $('fromselect').value;
+      const cur = SNAPSHOTS[to] || {}, old = from ? SNAPSHOTS[from] : null;
+
+      $('overall-header').textContent = 'As of ' + fmtDate(to);
+      $('period-header').textContent = from ? fmtDate(from) + ' → ' + fmtDate(to) + ' · ' + dayDiff(from, to) + ' days' : 'Comparison period';
 
       document.querySelectorAll('#tbl tbody tr').forEach(row => {
-        const name = row.dataset.name;
-        const cur  = CURRENT[name];
-        const old  = snap && snap[name];
+        const name = row.dataset.name, c = cur[name], o = old && old[name];
+        row.querySelector('.overall-gp' ).innerHTML = fmtNum(c && c.gp, 0);
+        row.querySelector('.overall-pts').innerHTML = fmtNum(c && c.pts, 2);
+        row.querySelector('.overall-avg').innerHTML = fmtNum(c && c.gp ? c.pts / c.gp : null, 2);
 
-        let dgp, dpts, davg;
-        if (cur && old) {
-          dgp  = (cur.gp  != null && old.gp  != null) ? cur.gp  - old.gp  : null;
-          dpts = (cur.pts != null && old.pts != null) ? cur.pts - old.pts : null;
-          davg = (dgp && dpts != null)                ? dpts / dgp        : null;
+        let dgp = null, dpts = null, davg = null;
+        if (c && o) {
+          dgp  = c.gp  - o.gp;
+          dpts = c.pts - o.pts;
+          davg = dgp > 0 ? dpts / dgp : null;
         }
-
-        row.querySelector('.delta-gp' ).innerHTML = fmtNum(dgp,  0);
+        row.querySelector('.delta-gp' ).innerHTML = fmtNum(dgp, 0);
         row.querySelector('.delta-pts').innerHTML = fmtNum(dpts, 2);
         row.querySelector('.delta-avg').innerHTML = fmtNum(davg, 2);
       });
-
       sort(lastCol, lastAsc);
     }
 
@@ -320,22 +335,10 @@
       document.querySelectorAll('thead tr:last-child th')[col].classList.add(asc ? 'sort-asc' : 'sort-desc');
     }
 
-    // Auto-select the snapshot closest to 7 days ago on load, then sort by Total Pts
-    (function() {
-      const dates = Object.keys(SNAPSHOTS).sort();
-      if (dates.length) {
-        const today = new Date('2026-10-28T00:00:00');
-        let best = dates[0], bestDiff = Infinity;
-        dates.forEach(d => {
-          const diff = Math.abs(Math.round((today - new Date(d + 'T00:00:00')) / 86400000) - 7);
-          if (diff < bestDiff) { bestDiff = diff; best = d; }
-        });
-        document.getElementById('snapselect').value = best;
-        updateDeltas(); // updateDeltas calls sort internally
-      } else {
-        sort(3, false); // no snapshots yet — still sort by Total Pts desc
-      }
-    })();
+    fillTo();
+    fillFrom();
+    render();
+
   </script>
 </body>
 </html>
